@@ -26,6 +26,9 @@ urlpatterns = [
     path('specialist/',include('core.specialist.urls')),
     path('tutor/',include('core.tutor.urls')),
     path('patient/',include('core.patient.urls')),
+    path('chat/',include('core.chat.urls')),
+    path('assignment/',include('core.assignment.urls')),
+    path('repository/',include('core.repository.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -10,13 +10,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from .models import Patient
 from .forms import PatientSignUpForm
+from core.user.mixins import RoleRequiredMixin
 
 # Create your views here.
-class PatientCreateView(LoginRequiredMixin,CreateView):
+class PatientCreateView(LoginRequiredMixin,RoleRequiredMixin,CreateView):
     model = Patient
     form_class = PatientSignUpForm
     template_name = 'patient/create.html'
     success_url = reverse_lazy('login:login')
+    role_required = 'tutor'
 
     def get_context_data(self,**kwargs):
         context =  super().get_context_data(**kwargs)

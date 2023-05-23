@@ -7,6 +7,7 @@ from datetime import date
 GENDER_OPTIONS = [
         ('MASCULINO', 'MASCULINO'),
         ('FEMENINO', 'FEMENINO'),
+        ('OTRO','OTRO')
     ]
 
 class Specialist(models.Model):
@@ -17,6 +18,9 @@ class Specialist(models.Model):
     gender = models.CharField(max_length=30, choices=GENDER_OPTIONS, verbose_name='Sexo')
     birthday_date = models.DateField(verbose_name='Fecha de Nacimiento')
     professional_license = models.CharField(verbose_name='Cedula Profesional',max_length=8,blank=False,null=False,unique=True,validators=[RegexValidator(r'^\d{5,8}$', 'La cedula profesional debe tener entre 5 y 8 digitos.')])
+    school = models.CharField(verbose_name='Escuela de Procedencia', max_length=150, blank=False, null= False)
+    year_of_graduation = models.CharField(verbose_name='Año de Egreso', max_length=4,  blank=False, null= False)
+    years_of_experience = models.IntegerField(verbose_name='Años de Experiencia', blank=False, null= False)
     street = models.CharField(verbose_name='Calle', max_length=100, blank=False,null=False)
     street_number = models.CharField(verbose_name='Numero', max_length=15, blank=False,null=False)
     neighborhood = models.CharField(verbose_name='Colonia', max_length=100, blank=False,null=False)

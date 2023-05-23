@@ -44,6 +44,11 @@ INSTALLED_APPS = [
     'core.specialist.apps.SpecialistConfig',
     'core.tutor.apps.TutorConfig',
     'core.patient.apps.PatientConfig',
+    'core.chat.apps.ChatConfig',
+    'core.assignment.apps.AssignmentConfig',
+    'core.repository.apps.RepositoryConfig',
+    
+
 ]
 
 MIDDLEWARE = [

@@ -6,7 +6,15 @@ from .models import User,Tutor
 GENDER_OPTIONS = [
         ('MASCULINO', 'MASCULINO'),
         ('FEMENINO', 'FEMENINO'),
+        ('OTRO','OTRO')
     ]
+
+RELATIONSHIP_OPTIONS = [
+    ('PAPÁ', 'PAPÁ'),
+    ('MAMÁ', 'MAMÁ'),
+    ('OTRO', 'OTRO'),
+]
+
 
 class TutorSignUpForm(UserCreationForm):
 
@@ -15,6 +23,7 @@ class TutorSignUpForm(UserCreationForm):
     maternal_surname = forms.CharField(label='Apellido Materno', max_length=150, required=True)
     birthday_date = forms.DateField(label='Fecha de Nacimiento')
     gender = forms.CharField(max_length=30, label='Sexo', widget=forms.Select(choices=GENDER_OPTIONS))
+    relationship = forms.CharField(max_length=30, label='Parentesco', widget=forms.Select(choices=RELATIONSHIP_OPTIONS))
     image = forms.ImageField(label='Imagen', required=False)
     street = forms.CharField(label='Calle', max_length=100, required=True)
     street_number = forms.CharField(label='Número', max_length=15, required=True)
@@ -39,6 +48,7 @@ class TutorSignUpForm(UserCreationForm):
         tutor.name = self.cleaned_data['name']
         tutor.paternal_surname = self.cleaned_data['paternal_surname']
         tutor.maternal_surname = self.cleaned_data['maternal_surname']
+        tutor.relationship = self.changed_data['relationship']
         tutor.birthday_date = self.cleaned_data['birthday_date']
         tutor.gender = self.cleaned_data['gender']
         tutor.street = self.cleaned_data['street']

@@ -17,7 +17,7 @@ class LoginFormView(LoginView):
 
 
     def dispatch(self, request, *args, **kwargs):
-        if(request.user.is_authenticated):
+        if request.user.is_authenticated:
             return redirect('login:dashboard')
         return super().dispatch(request, *args, **kwargs)
     
@@ -28,10 +28,13 @@ class DashboardView(LoginRequiredMixin,TemplateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['fullname'] = ''
-        if(self.request.user.is_specialist):
-            specialist = Specialist.objects.get(user = self.request.user)
-            context['fullname'] = specialist.get_full_name()
-        if(self.request.user.is_tutor):
-            tutor = Tutor.objects.get(user = self.request.user)
-            context['fullname'] = tutor.get_full_name()
+        try:
+            if self.request.user.is_specialist:
+                specialist = Specialist.objects.get(user = self.request.user)
+                context['fullname'] = specialist.get_full_name()
+            if self.request.user.is_tutor:
+                tutor = Tutor.objects.get(user = self.request.user)
+                context['fullname'] = tutor.get_full_name()
+        except Exception as e:
+            pass
         return context

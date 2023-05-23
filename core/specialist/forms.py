@@ -1,13 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
 from core.user.models import User
 from .models import Specialist
 
 GENDER_OPTIONS = [
         ('MASCULINO', 'MASCULINO'),
         ('FEMENINO', 'FEMENINO'),
+        ('OTRO','OTRO')
     ]
 
 
@@ -23,6 +24,16 @@ class SpecialistSignUpForm(UserCreationForm):
                 message='La cedula profesional debe tener entre 5 y 8 digitos.'
             )
         ])
+    school = forms.CharField(label='Escuela de Procedencia', max_length=150, required=True)
+    year_of_graduation = forms.IntegerField(
+        label='Año de Egreso',
+        validators=[
+            MaxValueValidator(2099, message='El año de egreso debe ser menor o igual a 2099.'),
+            MinValueValidator(1900, message='El año de egreso debe ser mayor o igual a 1900.')
+        ],
+        required=True
+    )
+    years_of_experience = forms.IntegerField(label='Años de Experiencia',min_value=1,max_value=99,required=True)
     birthday_date = forms.DateField(label='Fecha de Nacimiento')
     gender = forms.CharField(max_length=30, label='Sexo', widget=forms.Select(choices=GENDER_OPTIONS))
     image = forms.ImageField(label='Imagen', required=False)
@@ -49,6 +60,9 @@ class SpecialistSignUpForm(UserCreationForm):
         specialist = Specialist(user=user)
         specialist.name = self.cleaned_data['name']
         specialist.birthday_date = self.cleaned_data['birthday_date']
+        specialist.school = self.cleaned_data['school']
+        specialist.year_of_graduation = self.cleaned_data['year_of_graduation']
+        specialist.years_of_experience = self.cleaned_data['years_of_experience']
         specialist.gender = self.cleaned_data['gender']
         specialist.paternal_surname = self.cleaned_data['paternal_surname']
         specialist.maternal_surname = self.cleaned_data['maternal_surname']
