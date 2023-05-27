@@ -48,7 +48,7 @@ class TutorSignUpForm(UserCreationForm):
         tutor.name = self.cleaned_data['name']
         tutor.paternal_surname = self.cleaned_data['paternal_surname']
         tutor.maternal_surname = self.cleaned_data['maternal_surname']
-        tutor.relationship = self.changed_data['relationship']
+        tutor.relationship = self.cleaned_data['relationship']
         tutor.birthday_date = self.cleaned_data['birthday_date']
         tutor.gender = self.cleaned_data['gender']
         tutor.street = self.cleaned_data['street']
